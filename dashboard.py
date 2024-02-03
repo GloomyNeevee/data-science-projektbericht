@@ -16,14 +16,14 @@ df = pd.read_csv(r'capitalbikeshare-output.csv',  sep=',')
 # dftime["Time"] = df["datetime"].dt.strftime("%H")
 # .df gibt error, print Datentypen 
 # Formatprüfung
-print(df.info())
-df["datetime"] = pd.to_datetime(df["datetime"], format='%Y-%m-%d %H:%M')
+# print(df.info())
+# df["datetime"] = pd.to_datetime(df["datetime"], format='%Y-%m-%d %H:%M')
 
 # Überschrift und Tabs
 st.write("# Capital Bike Share")
 
 show_tables = st.toggle("Datentabellen anzeigen")
-tab1, tab2 = st.tabs(["Jährliche Datentabeellen", "Gesamte Datentabellen"])
+tab1, tab2 = st.tabs(["Jährliche Datentabellen", "Gesamte Datentabellen"])
 
 
 with tab1:
@@ -93,8 +93,6 @@ with tab1:
         )
     df3 = df3.groupby("workingday")["count"].sum()
     
-    
-    
     # Streamlit
     st.bar_chart(
                  data=df3,
@@ -102,6 +100,9 @@ with tab1:
                  width=0, height=500,
                  use_container_width=True
                  )
+    if show_tables:
+        st.write(df3)
+    
     
     st.write("Aufgeteilt nach Wetter pro Stunde")
     
@@ -122,8 +123,6 @@ with tab2:
     
     st.write("Folgende Daten gelten für den **gesamten** Zeitraum.")
     df4 = df.groupby("wind_speed")["count"].mean()
-    if show_tables:
-        st.write(df4)
     
     # Histogramm
     fig = plt.figure()
@@ -138,9 +137,11 @@ with tab2:
     plt.xlim(0, 17.5)
     plt.title("Fahrradausleihe nach Windgeschwindigkeit", loc='left')
     
+    
     # Streamlit
     st.pyplot(fig)
-    
+    if show_tables:
+        st.write(df4)
     
     # 5. Ausleihe nach Uhrzeit und Monat
     
@@ -152,7 +153,7 @@ with tab2:
     styear = st.slider("Select year", 2018, 2021)
     stmonth = st.slider("Select month", 1, 12)
     
-    df5stvalue = df5[(df5["datetime"].dt.year==styear) & (df5["datetime"].dt.month==stmonth)]
+    df5stvalue = df5[(df5["Year"]==styear) & (df5["Month"]==stmonth)]
     st.bar_chart(
                  data=df5stvalue,
                  x="hour",
@@ -160,4 +161,7 @@ with tab2:
                  width=0, height=500,
                  use_container_width=True
                  )
+        
+    if show_tables:
+        st.write(df5stvalue)
 

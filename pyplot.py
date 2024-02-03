@@ -43,7 +43,7 @@ df11.plot.barh()
 plt.title("Wetterhäufigkeit")
 plt.ylabel("Wetter")
 plt.xlabel("Anzahl aufgenommener Stunden [h]")
-plt.savefig(r"images/Wetterhäufigkeit.png", dpi=300)
+plt.savefig(r"images/Wetterhäufigkeit.png", dpi=300, bbox_inches='tight')
 
 
 # 2. Ausleihe nach Wetterbedingungen
@@ -53,7 +53,7 @@ df2.plot.barh()
 plt.title("Ausleihe nach Wetterbedingungen")
 plt.ylabel("Wetter")
 plt.xlabel("Anzahl ausgeliehener Fahrräder [Millionen]")
-plt.savefig(r"images/Ausleihe nach Wetter.png", dpi=300)
+plt.savefig(r"images/Ausleihe nach Wetter.png", dpi=300, bbox_inches='tight')
 
 # Durchschnitt pro Stunde
 df21 = df.groupby("weather_main")["count"].mean()
@@ -63,7 +63,7 @@ df21.plot.barh()
 plt.title("Durchschnittliche Ausleihe nach Wetterbedingungen")
 plt.ylabel("Wetter")
 plt.xlabel("Anzahl ausgeliehener Fahrräder pro Stunde")
-plt.savefig(r"images/Ausleihe nach Wetter pro Stunde.png", dpi=300)
+plt.savefig(r"images/Ausleihe nach Wetter pro Stunde.png", dpi=300, bbox_inches='tight')
 
 
 # 3. Ausleihe nach Wochentagen 
@@ -82,14 +82,14 @@ df3wk.plot.bar()
 plt.title("Ausleihe nach Wochentag")
 plt.xlabel("Wochentag")
 plt.ylabel("Anzahl ausgeliehener Fahrräder [Millionen]")
-plt.savefig(r"images/Ausleihe nach Wochentag.png", dpi=300)
+plt.savefig(r"images/Ausleihe nach Wochentag.png", dpi=300, bbox_inches='tight')
 
 plt.figure()
 pivot3.plot.barh()
 plt.title("Durchschnittliche Ausleihe nach Wochentag und Wetter")
 plt.ylabel("Wetter")
 plt.xlabel("Anzahl ausgeliehener Fahrräder pro Stunde")
-plt.savefig(r"images/Ausleihe nach Wochentag.png", dpi=300)
+plt.savefig(r"images/Ausleihe nach Wochentag und Wetter.png", dpi=300, bbox_inches='tight')
 
 
 # 4. Zusammenhang zwischen Windgeschwindigkeit und Ausleihe
@@ -110,7 +110,7 @@ plt.xlabel("Windgeschwindigkeit")
 plt.ylabel("Anzahl der Ausleihen")
 plt.xlim(0, 17.5)
 plt.title("Fahrradausleihe nach Windgeschwindigkeit", loc='left')
-
+plt.savefig(r"images/Zusammenhang Windgeschwindigkeit Ausleihe.png", dpi=300, bbox_inches='tight')
 
 # 5. Ausleihe nach Uhrzeit und Monat
 df5 = df
@@ -152,7 +152,7 @@ for yeari in range(2018, 2022, 1):
         plt.figure()
         plt.axis([0, 23, 0, 1500])
         plt.title("Fahrradausleihe " + str(yeari) + "-" + str(monthi), loc='left')
-        # es gibt leere monate, welche einen error geben
+        # es gibt leere monate, welche einen error geben. Try.
         try:
             sns.barplot(
                   data=df5i,
@@ -160,7 +160,6 @@ for yeari in range(2018, 2022, 1):
                   y="count",
                   estimator="mean"
                   )   
-        #     df5mean.plot.hist(bins=24)
         except ValueError:
             pass
         
